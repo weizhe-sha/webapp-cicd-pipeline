@@ -35,4 +35,4 @@ jobs:
         with:
           python-version-file: '.python-version'
       - name: Run tests
-        run: pytest
+        run: python tests/test_app.py
