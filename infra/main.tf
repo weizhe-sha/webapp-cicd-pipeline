@@ -23,7 +23,7 @@ resource "azurerm_service_plan" "asp" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   os_type             = "Linux"
-  sku_name            = "F1"
+  sku_name            = "B1"
 }
 
 resource "azurerm_linux_web_app" "webapp" {
@@ -34,7 +34,6 @@ resource "azurerm_linux_web_app" "webapp" {
   depends_on          = [azurerm_service_plan.asp]
   https_only          = true
   site_config {
-    always_on           = false
     minimum_tls_version = "1.2"
     application_stack {
       # python_version = file("${path.module}/../.python-version")
@@ -44,6 +43,9 @@ resource "azurerm_linux_web_app" "webapp" {
       docker_registry_username = var.github_username
       docker_registry_password = var.github_PAT
     }
+  }
+  app_settings = {
+    WEBSITES_PORT = "5000"
   }
 }
 
