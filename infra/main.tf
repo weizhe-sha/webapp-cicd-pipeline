@@ -1,12 +1,20 @@
-# variable "github_username" {
-#   type      = string
-#   sensitive = true
-# }
+variable "github_username" {
+  type      = string
+  sensitive = true
+}
 
-# variable "github_PAT" {
-#   type      = string
-#   sensitive = true
-# }
+variable "github_PAT" {
+  type      = string
+  sensitive = true
+}
+
+variable "github_repo" {
+  type      = string
+}
+
+variable "repo_branch" {
+  type      = string
+}
 
 import {
   id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
@@ -36,14 +44,14 @@ resource "azurerm_linux_web_app" "webapp" {
   site_config {
     minimum_tls_version = "1.2"
     always_on = false
-    # application_stack {
-    #   # python_version = file("${path.module}/../.python-version")
-    #   docker_registry_url      = "https://ghcr.io"
-    #   # parameterize repo name
-    #   docker_image_name        = "${var.github_username}/proa-interview:main"
-    #   docker_registry_username = var.github_username
-    #   docker_registry_password = var.github_PAT
-    # }
+    application_stack {
+      # python_version = file("${path.module}/../.python-version")
+      docker_registry_url      = "https://ghcr.io"
+      # parameterize repo name
+      docker_image_name        = "${var.github_username}/${var.github_repo}:${var.repo_branch}"
+      docker_registry_username = var.github_username
+      docker_registry_password = var.github_PAT
+    }
   }
   app_settings = {
     WEBSITES_PORT = "5000"
