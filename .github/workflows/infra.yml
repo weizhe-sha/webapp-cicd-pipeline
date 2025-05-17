@@ -1,8 +1,8 @@
-name: Deploy to Azure
+name: Infra
 
 on:     
     workflow_run:
-        workflows: ["Build and Push Docker Image"]
+        workflows: ["CI"]
         types:
         - completed
 

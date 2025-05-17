@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
     workflow_run:
-      workflows: ["CI"]
+      workflows: ["Infra"]
       types:
         - completed
 
@@ -39,3 +39,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: "my-app-name"
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: "${{ steps.meta.outputs.tags }}"
