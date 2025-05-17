@@ -34,7 +34,7 @@ jobs:
         run: |
             terraform -chdir=$TERRAFORM_DIR plan \
                 -var="github_username=${{ github.actor }}" \
-                -var="github_PAT=${{ secrets.GITHUB_TOKEN }}" \
+                -var="github_PAT=${{ secrets.IMAGE_PULL_TOKEN }}" \
                 -var="github_repo=${{ github.repository }}"\
                 -var="repo_branch=main"\
                 -out main.tfplan
@@ -43,7 +43,7 @@ jobs:
         run: |
             terraform -chdir=$TERRAFORM_DIR apply \
                 -var="github_username=${{ github.actor }}" \
-                -var="github_PAT=${{ secrets.GITHUB_TOKEN }}" \
+                -var="github_PAT=${{ secrets.IMAGE_PULL_TOKEN }}" \
                 -var="github_repo=${{ github.repository }}"\
                 -var="repo_branch=main"\
                 -auto-approve main.tfplan
