@@ -25,7 +25,6 @@ jobs:
         pylint $(git ls-files '*.py')
   
   test:
-    name: Run Tests
     runs-on: ubuntu-latest
     needs: lint
     steps:
