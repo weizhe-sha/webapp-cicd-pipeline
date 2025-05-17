@@ -8,6 +8,11 @@ variable "github_PAT" {
   sensitive = true
 }
 
+import {
+  id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
+  to = azurerm_resource_group.rg
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "proa-interview"
   location = "Australia East"
@@ -34,7 +39,8 @@ resource "azurerm_linux_web_app" "webapp" {
     application_stack {
       # python_version = file("${path.module}/../.python-version")
       docker_registry_url      = "https://ghcr.io"
-      docker_image_name        = "weizhe-sha/proa-interview:main"
+      # parameterize repo name
+      docker_image_name        = "${var.github_username}/proa-interview:main"
       docker_registry_username = var.github_username
       docker_registry_password = var.github_PAT
     }
