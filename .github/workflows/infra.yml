@@ -1,17 +1,16 @@
 name: Deploy to Azure
 
-on:
-  workflow_run:
-    workflows: ["Build and Push Docker Image"]
-    types:
+on:     
+    workflow_run:
+        workflows: ["Build and Push Docker Image"]
+        types:
         - completed
 
 jobs:
   deploy:
+    if: contains(github.event.head_commit.message, 'infra')
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+    
     env:
         TERRAFORM_DIR: "./infra"
     steps:
@@ -42,6 +41,6 @@ jobs:
       - name: Terraform Apply
         run: |
             terraform -chdir=$TERRAFORM_DIR apply \
-            -var="github_username=${{ github.actor }}" \
-            -var="github_PAT=${{ secrets.GITHUB_TOKEN }}" \
-            -auto-approve main.tfplan
+                -var="github_username=${{ github.actor }}" \
+                -var="github_PAT=${{ secrets.GITHUB_TOKEN }}" \
+                -auto-approve main.tfplan
