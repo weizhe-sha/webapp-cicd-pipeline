@@ -1,14 +1,13 @@
 name: Deploy to Azure
 
 on:
-    push:
-        branches: [ main ]
-    pull_request:
-        branches: [ main ]
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    types:
+        - completed
 
 jobs:
   deploy:
-    if: contains(github.event.head_commit.message, 'azure')
     runs-on: ubuntu-latest
     env:
         TERRAFORM_DIR: "./infra"
@@ -22,6 +21,7 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          audience: api://AzureADTokenExchange
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -42,8 +42,3 @@ jobs:
             -var="github_username=${{ github.actor }}" \
             -var="github_PAT=${{ secrets.GITHUB_TOKEN }}" \
             -auto-approve main.tfplan
-
-    #   - name: Azure Login
-    #     uses: azure/login@v2
-    #     with:
-    #       creds: ${{ secrets.AZURE_CREDENTIALS }}
