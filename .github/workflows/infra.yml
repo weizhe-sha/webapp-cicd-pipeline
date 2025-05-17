@@ -17,21 +17,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         run: terraform -chdir=$TERRAFORM_DIR init
 
       - name: Terraform Plan
         run: terraform -chdir=$TERRAFORM_DIR plan\
-            -var="github_username=${{ github.actor }}"\
-            -var="github_PAT=${{ secrets.GITHUB_TOKEN }}"\
+            -var="github_username=${{ github.actor }}" -var="github_PAT=${{ secrets.GITHUB_TOKEN }}"\
             -out main.tfplan
 
       - name: Terraform Apply
         run: terraform -chdir=$TERRAFORM_DIR apply\
-            -var="github_username=${{ github.actor }}"\
-            -var="github_PAT=${{ secrets.GITHUB_TOKEN }}"\
+            -var="github_username=${{ github.actor }}" -var="github_PAT=${{ secrets.GITHUB_TOKEN }}"\
             -auto-approve main.tfplan
 
     #   - name: Azure Login
