@@ -1,15 +1,15 @@
 name: Deploy to Azure
 
-on:
-    push:
-        branches: [ main ]
-    pull_request:
-        branches: [ main ]
-# on: issue_comment
+# on:
+#     push:
+#         branches: [ main ]
+#     pull_request:
+#         branches: [ main ]
+on: issue_comment
 
 jobs:
   deploy:
-    # if: contains(github.event.comment.body, '/azure')
+    if: contains(github.event.comment.body, '/azure')
     runs-on: ubuntu-latest
     env:
         TERRAFORM_DIR: "./infra"
@@ -24,13 +24,13 @@ jobs:
         run: terraform -chdir=$TERRAFORM_DIR init
 
       - name: Terraform Plan
-        run: terraform plan -chdir=$TERRAFORM_DIR \
+        run: terraform -chdir=$TERRAFORM_DIR plan\
             -var="github_username=${{ github.actor }}"\
             -var="github_PAT=${{ secrets.GITHUB_TOKEN }}"\
             -out main.tfplan
 
       - name: Terraform Apply
-        run: terraform apply -chdir=$TERRAFORM_DIR \
+        run: terraform -chdir=$TERRAFORM_DIR apply\
             -var="github_username=${{ github.actor }}"\
             -var="github_PAT=${{ secrets.GITHUB_TOKEN }}"\
             -auto-approve main.tfplan
