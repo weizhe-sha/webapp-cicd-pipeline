@@ -48,7 +48,7 @@ resource "azurerm_linux_web_app" "webapp" {
       # python_version = file("${path.module}/../.python-version")
       docker_registry_url      = "https://ghcr.io"
       # parameterize repo name
-      docker_image_name        = "${var.github_username}/${var.github_repo}:${var.repo_branch}"
+      docker_image_name        = "${var.github_repo}:${var.repo_branch}"
       docker_registry_username = var.github_username
       docker_registry_password = var.github_PAT
     }
