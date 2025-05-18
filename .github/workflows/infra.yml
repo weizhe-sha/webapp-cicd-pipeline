@@ -14,6 +14,7 @@ jobs:
         contents: read
     env:
         TERRAFORM_DIR: "./infra"
+        BRANCH: "main"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,7 +39,7 @@ jobs:
                 -var="github_username=${{ github.actor }}" \
                 -var="github_PAT=${{ secrets.IMAGE_PULL_TOKEN }}" \
                 -var="github_repo=${{ github.repository }}"\
-                -var="repo_branch=main"\
+                -var="repo_branch=$BRANCH"\
                 -out main.tfplan
 
       - name: Terraform Apply
@@ -47,5 +48,5 @@ jobs:
                 -var="github_username=${{ github.actor }}" \
                 -var="github_PAT=${{ secrets.IMAGE_PULL_TOKEN }}" \
                 -var="github_repo=${{ github.repository }}"\
-                -var="repo_branch=main"\
+                -var="repo_branch=$BRANCH"\
                 -auto-approve main.tfplan
