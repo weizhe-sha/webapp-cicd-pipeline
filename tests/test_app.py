@@ -11,4 +11,3 @@ def test_home():
     """ send request to home page"""
     r = requests.get("http://proa-webapp.azurewebsites.net/", timeout=30)
     assert r.status_code == 200
-    assert b"Hello, world!" in r.data

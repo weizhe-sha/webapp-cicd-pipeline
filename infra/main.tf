@@ -53,9 +53,6 @@ resource "azurerm_linux_web_app" "webapp" {
       docker_registry_password = var.github_PAT
     }
   }
-  app_settings = {
-    WEBSITES_PORT = "5000"
-  }
 }
 
 # resource "azurerm_app_service" "app" {
