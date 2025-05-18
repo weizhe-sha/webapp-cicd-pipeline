@@ -1,21 +1,3 @@
-variable "github_username" {
-  type      = string
-  sensitive = true
-}
-
-variable "github_PAT" {
-  type      = string
-  sensitive = true
-}
-
-variable "github_repo" {
-  type      = string
-}
-
-variable "tag" {
-  type      = string
-}
-
 import {
   id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
   to = azurerm_resource_group.rg
@@ -44,11 +26,5 @@ resource "azurerm_linux_web_app" "webapp" {
   site_config {
     minimum_tls_version = "1.2"
     always_on           = false
-    application_stack {
-      docker_registry_url = "https://ghcr.io"
-      docker_image_name        = "${var.github_repo}:${var.tag}"
-      docker_registry_username = var.github_username
-      docker_registry_password = var.github_PAT
-    }
   }
 }
