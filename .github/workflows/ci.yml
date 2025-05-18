@@ -83,7 +83,8 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        run: terraform -chdir=$TERRAFORM_DIR init \
+        run: |
+            terraform -chdir=$TERRAFORM_DIR init \
                 -backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}" \
                 -backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}"
 
