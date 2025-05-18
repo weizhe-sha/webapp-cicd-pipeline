@@ -8,13 +8,17 @@ variable "github_PAT" {
   sensitive = true
 }
 
-variable "github_repo" {
+variable "image_tag" {
   type      = string
 }
 
-variable "repo_branch" {
-  type      = string
-}
+# variable "github_repo" {
+#   type      = string
+# }
+
+# variable "repo_branch" {
+#   type      = string
+# }
 
 import {
   id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
@@ -43,30 +47,14 @@ resource "azurerm_linux_web_app" "webapp" {
   https_only          = false
   site_config {
     minimum_tls_version = "1.2"
-    always_on = false
+    always_on           = false
     application_stack {
-      # python_version = file("${path.module}/../.python-version")
-      docker_registry_url      = "https://ghcr.io"
+      docker_registry_url = "https://ghcr.io"
       # parameterize repo name
-      docker_image_name        = "${var.github_repo}:${var.repo_branch}"
+      # docker_image_name        = "${var.github_repo}:${var.repo_branch}"
+      docker_image_name        = var.image_tag
       docker_registry_username = var.github_username
       docker_registry_password = var.github_PAT
     }
   }
 }
-
-# resource "azurerm_app_service" "app" {
-#   name                = "proa-app"
-#   location            = azurerm_resource_group.rg.location
-#   resource_group_name = azurerm_resource_group.rg.name
-#   app_service_plan_id = azurerm_app_service_plan.asp.id
-
-#   site_config {
-#     # python_version =file("${path.root}/.python-version")
-#     linux_fx_version = "DOCKER|ghcr.io/weizhe-sha/proa-interview:latest"
-#   }
-
-#   app_settings = {
-#     WEBSITES_PORT = "80"
-#   }
-# }
