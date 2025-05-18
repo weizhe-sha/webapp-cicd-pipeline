@@ -108,9 +108,8 @@ jobs:
             terraform -chdir=$TERRAFORM_DIR plan \
                 -var="github_username=${{ github.actor }}" \
                 -var="github_PAT=${{ secrets.CONTAINER_REGISTRY }}" \
-                -var="image_tag=${{ steps.meta.outputs.tags }}" \
-                # -var="github_repo=${{ github.repository }}"\
-                # -var="repo_branch=$BRANCH"\
+                -var="github_repo=${{ github.repository }}"\
+                -var="repo_branch=$BRANCH"\
                 -out main.tfplan
 
       - name: Terraform Apply
@@ -118,23 +117,6 @@ jobs:
             terraform -chdir=$TERRAFORM_DIR apply \
                 -var="github_username=${{ github.actor }}" \
                 -var="github_PAT=${{ secrets.CONTAINER_REGISTRY }}" \
-                -var="image_tag=${{ steps.meta.outputs.tags }}" \
-                # -var="github_repo=${{ github.repository }}"\
-                # -var="repo_branch=$BRANCH"\
+                -var="github_repo=${{ github.repository }}"\
+                -var="repo_branch=$BRANCH"\
                 -auto-approve main.tfplan
-
-  # test:
-  #   runs-on: ubuntu-latest
-  #   needs: deploy
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v5
-  #       with:
-  #         python-version-file: '.python-version'
-  #     - name: Install dependencies
-  #       run: |
-  #         pip install -r requirements.txt
-  #         pip install pytest
-  #     - name: Run tests
-  #       run: pytest

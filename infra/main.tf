@@ -8,17 +8,13 @@ variable "github_PAT" {
   sensitive = true
 }
 
-variable "image_tag" {
+variable "github_repo" {
   type      = string
 }
 
-# variable "github_repo" {
-#   type      = string
-# }
-
-# variable "repo_branch" {
-#   type      = string
-# }
+variable "repo_branch" {
+  type      = string
+}
 
 import {
   id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
@@ -50,9 +46,7 @@ resource "azurerm_linux_web_app" "webapp" {
     always_on           = false
     application_stack {
       docker_registry_url = "https://ghcr.io"
-      # parameterize repo name
-      # docker_image_name        = "${var.github_repo}:${var.repo_branch}"
-      docker_image_name        = var.image_tag
+      docker_image_name        = "${var.github_repo}:${var.repo_branch}"
       docker_registry_username = var.github_username
       docker_registry_password = var.github_PAT
     }
