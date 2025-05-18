@@ -12,7 +12,7 @@ variable "github_repo" {
   type      = string
 }
 
-variable "repo_branch" {
+variable "tag" {
   type      = string
 }
 
@@ -46,7 +46,7 @@ resource "azurerm_linux_web_app" "webapp" {
     always_on           = false
     application_stack {
       docker_registry_url = "https://ghcr.io"
-      docker_image_name        = "${var.github_repo}:${var.repo_branch}"
+      docker_image_name        = "${var.github_repo}:${var.tag}"
       docker_registry_username = var.github_username
       docker_registry_password = var.github_PAT
     }

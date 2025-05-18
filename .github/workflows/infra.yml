@@ -38,7 +38,7 @@ jobs:
             terraform -chdir=$TERRAFORM_DIR plan \
                 -var="github_username=${{ github.actor }}" \
                 -var="github_PAT=${{ secrets.CONTAINER_REGISTRY }}" \
-                -var="github_repo=${{ github.repository }}"\
+                -var="tag=${{ github.run_number }}"\
                 -var="repo_branch=$BRANCH"\
                 -out main.tfplan
 
@@ -47,6 +47,6 @@ jobs:
             terraform -chdir=$TERRAFORM_DIR apply \
                 -var="github_username=${{ github.actor }}" \
                 -var="github_PAT=${{ secrets.CONTAINER_REGISTRY }}" \
-                -var="github_repo=${{ github.repository }}"\
+                -var="tag=${{ github.run_number }}"\
                 -var="repo_branch=$BRANCH"\
                 -auto-approve main.tfplan
