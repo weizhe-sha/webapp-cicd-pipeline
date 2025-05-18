@@ -12,4 +12,3 @@ def test_home():
     r = requests.get("http://localhost:5000/", timeout=30)
     assert r.status_code == 200
 
-
