@@ -93,6 +93,7 @@ jobs:
     needs: build-push-test-scan
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       packages: read
       contents: read
     steps:

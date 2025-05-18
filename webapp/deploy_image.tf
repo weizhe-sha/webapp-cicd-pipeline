@@ -1,4 +1,8 @@
 
+import {
+  id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
+  to = azurerm_resource_group.rg
+}
 
 import {
   id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview/providers/Microsoft.Web/sites/proa-webapp"
