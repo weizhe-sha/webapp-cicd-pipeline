@@ -30,7 +30,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-      # actions: read
+      actions: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
