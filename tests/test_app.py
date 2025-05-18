@@ -8,6 +8,7 @@ def test_healthz():
     assert r.status_code == 200
 
 def test_home():
+    """ send request to home page"""
     r = requests.get("http://localhost:5000/", timeout=5)
     assert r.status_code == 200
     assert b"Hello, world!" in r.data
