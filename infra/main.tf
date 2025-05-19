@@ -13,17 +13,17 @@ variable "image_name" {
 }
 
 import {
-  id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
+  id = ## resoucre group id ##
   to = azurerm_resource_group.rg
 }
 
-# resource "azurerm_resource_group" "rg" {
-#   name     = "proa-interview"
-#   location = "Australia East"
-# }
+resource "azurerm_resource_group" "rg" {
+  name     = ## resource group name ##
+  location = ## resource group location ##
+}
 
 resource "azurerm_service_plan" "asp" {
-  name                = "proa-asp"
+  name                = ## asp name ##
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   os_type             = "Linux"
@@ -31,7 +31,7 @@ resource "azurerm_service_plan" "asp" {
 }
 
 resource "azurerm_linux_web_app" "webapp" {
-  name                = "proa-webapp"
+  name                = ## webapp name ##
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   service_plan_id     = azurerm_service_plan.asp.id

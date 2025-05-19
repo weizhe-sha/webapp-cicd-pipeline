@@ -17,6 +17,13 @@ Build a CI/CD pipeline that lints, tests, builds a Docker image, pushes it to a 
 - You may be given a modified version of the app to validate pipeline robustness
 
 ---
+## Setting Up the Infrastructure 
+### 1. Create a resource group for storage account that stores terraform state files
+### 2. Create a storage account in the resource group and create a container blob in the storage account
+### 3. Paste subscription id and names of resource group, storage account and container created in previous steps to `infra/provider.tf`
+### 4. Create a resource group for Azure Service Plan and Web App 
+### 5. Paste resource group id, name and location to `infra/main.tf`
+### 6. Insert value for asp and webapp name in `infra/main.tf`
 
 ## Setting Up the CI/CD Pipeline
 ### 1. Clone the Repository
