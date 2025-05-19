@@ -24,6 +24,7 @@ Build a CI/CD pipeline that lints, tests, builds a Docker image, pushes it to a 
 ### 4. Create a resource group for Azure Service Plan and Web App 
 ### 5. Paste resource group id, name and location to `infra/main.tf`
 ### 6. Insert value for asp and webapp name in `infra/main.tf`
+### 7. Run `terraform init`,  `terraform apply` and enter variable value to deploy the infrastructure
 
 ## Setting Up the CI/CD Pipeline
 ### 1. Clone the Repository
