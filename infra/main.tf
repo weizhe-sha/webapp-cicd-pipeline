@@ -1,12 +1,26 @@
+variable "github_PAT" {
+  type = string
+  sensitive = true
+}
+
+variable "github_username" {
+  type = string
+  sensitive = true
+}
+
+variable "image_name" {
+  type = string
+}
+
 import {
   id = "/subscriptions/e76f596f-9840-402c-b029-334dc07167a1/resourceGroups/proa-interview"
   to = azurerm_resource_group.rg
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "proa-interview"
-  location = "Australia East"
-}
+# resource "azurerm_resource_group" "rg" {
+#   name     = "proa-interview"
+#   location = "Australia East"
+# }
 
 resource "azurerm_service_plan" "asp" {
   name                = "proa-asp"
@@ -26,5 +40,13 @@ resource "azurerm_linux_web_app" "webapp" {
   site_config {
     minimum_tls_version = "1.2"
     always_on           = false
+    application_stack {
+      docker_registry_password = var.github_PAT
+      docker_image_name = var.image_name
+      docker_registry_username = var.github_username
+    }
+  }
+  app_settings = {
+    "WEBSITES_PORT" = 5000
   }
 }
