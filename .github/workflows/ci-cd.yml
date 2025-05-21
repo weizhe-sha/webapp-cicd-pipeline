@@ -37,6 +37,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: '.python-version'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+      
+      - name: Run app
+        run: python app/app.py
+
+      - name: Run tests
+        run: pytest
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -58,23 +73,12 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{github.run_number}}
+          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
       
-      - name: Run Docker container
-        run: docker run -d -p 5000:5000 ghcr.io/${{ github.repository }}:${{github.run_number}}
-      
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: '.python-version'
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install pytest
-      - name: Run tests
-        run: pytest
-      
+      # - name: Run Docker container
+      #   run: docker run -d -p 5000:5000 ghcr.io/${{ github.repository }}:${{ github.sha }}
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.30.0
         with:
@@ -118,4 +122,4 @@ jobs:
       - uses: azure/webapps-deploy@v2
         with:
           app-name: "proa-webapp"
-          images: ghcr.io/${{ github.repository }}:${{ github.run_number }}
+          images: ghcr.io/${{ github.repository }}:${{ github.sha }}
